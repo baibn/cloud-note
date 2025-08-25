@@ -1,8 +1,7 @@
-// vitest.config.ts
+import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  test: {
-    // 你的测试配置
-  },
+  plugins: [vue()],
+  test: { globals: true, environment: 'jsdom' },
 })
