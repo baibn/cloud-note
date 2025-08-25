@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
 import { todoApi } from '@/api/todo'
 import type { Todo } from '@/types/todo'
+import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useTodoStore = defineStore('todo', () => {
@@ -30,5 +30,11 @@ export const useTodoStore = defineStore('todo', () => {
     list.value = list.value.filter((t) => t.id !== id)
   }
 
-  return { list, loading, load, add, toggle, remove }
+  const update = async (id: number, text: string) => {
+    await todoApi.update(id, { text })
+    const todo = list.value.find((t) => t.id === id)!
+    todo.text = text
+  }
+
+  return { list, loading, load, add, toggle, remove, update }
 })
